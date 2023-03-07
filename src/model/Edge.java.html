@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Edge.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Edge.java</span></div><h1>Edge.java</h1><pre class="source lang-java linenums">package model;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Edge implements Cloneable, Comparable&lt;Edge&gt;{
+	Node node1;
+	Node node2; 
+	Color color;
+	int idx;
+	
+<span class="fc" id="L13">	public Edge(Node n1, Node n2, Color c, int idx) {</span>
+<span class="fc" id="L14">		this.node1 = n1;</span>
+<span class="fc" id="L15">		this.node2 = n2;</span>
+<span class="fc" id="L16">		this.color = c;</span>
+<span class="fc" id="L17">		this.idx = idx;</span>
+<span class="fc" id="L18">	}</span>
+
+	public int getIdx() {
+<span class="fc" id="L21">		return idx;</span>
+	}
+	
+	public void setColor(Color c) {
+<span class="fc" id="L25">		this.color = c;</span>
+<span class="fc" id="L26">	}</span>
+	
+	public Color getColor() {
+<span class="fc" id="L29">		return this.color;</span>
+	}
+	
+	public Object clone() {    
+<span class="fc" id="L33">        Object o = null;    </span>
+        try {    
+<span class="fc" id="L35">            o=(Edge)super.clone();</span>
+<span class="pc" id="L36">        } catch(CloneNotSupportedException e) {    </span>
+<span class="nc" id="L37">             System.out.println(e.toString());    </span>
+        }    
+<span class="fc" id="L39">        return o;    </span>
+    }
+	
+	public Node[] getNodes() {
+<span class="fc" id="L43">		List&lt;Node&gt; list = new ArrayList&lt;Node&gt;();</span>
+<span class="fc" id="L44">		list.add((Node)node1.clone());</span>
+<span class="fc" id="L45">		list.add((Node)node2.clone());</span>
+<span class="fc" id="L46">		return list.toArray(new Node[list.size()]);</span>
+	}
+
+	public int compareTo(Edge e) {
+<span class="fc" id="L50">    	return this.idx - e.idx;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

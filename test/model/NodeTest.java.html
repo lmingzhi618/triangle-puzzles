@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NodeTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">NodeTest.java</span></div><h1>NodeTest.java</h1><pre class="source lang-java linenums">package model;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+<span class="fc" id="L6">public class NodeTest {</span>
+<span class="fc" id="L7">	private int x = 165;</span>
+<span class="fc" id="L8">  	private int y = 13;</span>
+<span class="fc" id="L9">  	private int width = 20;</span>
+	
+  	@Test
+	void testIsTargeted() {
+<span class="fc" id="L13">	  	Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L14">		assertFalse(node.isTargeted(0, 0));</span>
+<span class="fc" id="L15">		assertFalse(node.isTargeted(x-25, y-25));</span>
+<span class="fc" id="L16">		assertTrue(node.isTargeted(x-5, y-5));</span>
+<span class="fc" id="L17">	}</span>
+
+	@Test
+	void testToogleSelected() {
+<span class="fc" id="L21">		Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L22">		assertFalse(node.isNodeSelected());</span>
+<span class="fc" id="L23">		node.toogleSelected();</span>
+<span class="fc" id="L24">		assertTrue(node.isNodeSelected());</span>
+<span class="fc" id="L25">	}</span>
+
+	@Test
+	void testClone() {
+<span class="fc" id="L29">		Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L30">		assertNotNull(node.clone());</span>
+<span class="fc" id="L31">	}</span>
+
+	@Test
+	void testGetX() {
+<span class="fc" id="L35">		Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L36">		assertEquals(x, node.getX());</span>
+<span class="fc" id="L37">	}</span>
+	
+	@Test
+	void testGetY() {
+<span class="fc" id="L41">	  	Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L42">		assertEquals(y, node.getY());</span>
+<span class="fc" id="L43">	}</span>
+	
+	@Test
+	void testGetWidth() {
+<span class="fc" id="L47">	  	Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L48">		assertEquals(width, node.getWidth());</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	void testIsNodeSelected() {
+<span class="fc" id="L53">	  	Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L54">		assertFalse(node.isNodeSelected());</span>
+<span class="fc" id="L55">		node.toogleSelected();</span>
+<span class="fc" id="L56">		assertTrue(node.isNodeSelected());</span>
+<span class="fc" id="L57">	}</span>
+	
+	@Test
+	void testCompareTo() {
+<span class="fc" id="L61">	  	Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L62">		assertEquals(0, node.compareTo(node));</span>
+<span class="fc" id="L63">	}</span>
+
+	@Test
+	void testGetIdx() {
+<span class="fc" id="L67">		Node node = new Node(x, y, 0);</span>
+<span class="fc" id="L68">		assertEquals(0, node.getIdx());</span>
+<span class="fc" id="L69">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

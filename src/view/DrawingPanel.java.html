@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DrawingPanel.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">DrawingPanel.java</span></div><h1>DrawingPanel.java</h1><pre class="source lang-java linenums">package view;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+import model.Edge;
+import model.Model;
+import model.Node;
+
+public class DrawingPanel extends JPanel{
+	Model model;
+	
+<span class="fc" id="L17">	DrawingPanel(Model m) {</span>
+<span class="fc" id="L18">		this.model = m;</span>
+<span class="fc" id="L19">	}</span>
+
+	private void drawNode(Graphics g, Node n) {
+		// 1.  draw a Square around the node
+<span class="nc" id="L23">		int f= n.getWidth() / 2;</span>
+<span class="nc" id="L24">		g.fillRect(n.getX()- f, n.getY()-f, n.getWidth(), n.getWidth());</span>
+<span class="nc" id="L25">	}</span>
+	
+/*
+	private void drawSelectNode(Graphics g, Node n) {
+		// 1.  draw a Square around the node
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setStroke(new BasicStroke(2f));
+		g2.setColor(Color.BLACK);
+		int f= n.getWidth() / 2;
+		g.fillRect(n.getX()- f, n.getY()-f, n.getWidth(), n.getWidth());
+		g2.setColor(Color.DARK_GRAY);
+	}
+
+	
+	private void drawUnSelectNode(Graphics g, Node n) {
+		// 1.  draw a Square around the node
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setStroke(new BasicStroke(2f));
+		g2.setColor(Color.WHITE);
+		int f= n.getWidth() / 2;
+		g.fillRect(n.getX()- f, n.getY()-f, n.getWidth(), n.getWidth());
+		g2.setColor(Color.DARK_GRAY);
+	}*/
+	
+	public void drawEdge(Graphics g, Edge e) {
+<span class="nc" id="L50">		Node[] nodes = e.getNodes();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (2 != nodes.length) {</span>
+<span class="nc" id="L52">			return;</span>
+		}
+<span class="nc" id="L54">		Graphics2D g2 = (Graphics2D)g;</span>
+<span class="nc" id="L55">		g2.setStroke(new BasicStroke(4f));</span>
+<span class="nc" id="L56">		g2.setColor(e.getColor());</span>
+<span class="nc" id="L57">		g.drawLine(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());</span>
+<span class="nc" id="L58">		g2.setColor(Color.DARK_GRAY);</span>
+<span class="nc" id="L59">	}</span>
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+<span class="nc" id="L63">		super.paintComponent(g);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (model == null) {</span>
+<span class="nc" id="L65">			return;</span>
+		}
+		
+<span class="nc" id="L68">		Graphics2D g2 = (Graphics2D)g;</span>
+<span class="nc" id="L69">		g2.setStroke(new BasicStroke(3.0f));</span>
+<span class="nc" id="L70">		g2.setColor(Color.GREEN);</span>
+
+<span class="nc" id="L72">		Edge[] edges = model.getEdges();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (int i = 0; i &lt; edges.length; i++) {</span>
+<span class="nc" id="L74">			drawEdge(g, edges[i]);</span>
+		}
+
+<span class="nc" id="L77">		g2.setStroke(new BasicStroke(2f));</span>
+<span class="nc" id="L78">		g2.setColor(Color.WHITE);</span>
+<span class="nc" id="L79">		Node[] nodes = model.getNodes();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (int i = 0; i &lt; nodes.length; i++) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (true == nodes[i].isNodeSelected()) {</span>
+<span class="nc" id="L82">				g2.setColor(Color.BLACK);</span>
+<span class="nc" id="L83">				drawNode(g, nodes[i]);</span>
+<span class="nc" id="L84">				g2.setColor(Color.WHITE);</span>
+<span class="nc" id="L85">				g2.drawString(String.valueOf(nodes[i].getIdx()), nodes[i].getX()-3, nodes[i].getY()+4);</span>
+<span class="nc" id="L86">				continue;</span>
+			}
+<span class="nc" id="L88">			drawNode(g, nodes[i]);</span>
+<span class="nc" id="L89">			g2.setColor(Color.BLACK);</span>
+<span class="nc" id="L90">			g2.drawString(String.valueOf(nodes[i].getIdx()), nodes[i].getX()-3, nodes[i].getY()+4);</span>
+<span class="nc" id="L91">			g2.setColor(Color.WHITE);</span>
+		}
+<span class="nc" id="L93">		g2.setColor(Color.DARK_GRAY);</span>
+<span class="nc" id="L94">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

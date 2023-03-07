@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Node.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Node.java</span></div><h1>Node.java</h1><pre class="source lang-java linenums">package model;
+
+public class Node implements Cloneable, Comparable&lt;Node&gt;
+{
+	int x;
+	int y;
+<span class="fc" id="L7">	int width = 20;</span>
+	int idx;			// node�±�
+<span class="fc" id="L9">	boolean isSelected = false;</span>
+	
+<span class="fc" id="L11">	public Node(int x, int y, int idx) {</span>
+<span class="fc" id="L12">		this.x = x;</span>
+<span class="fc" id="L13">		this.y = y;</span>
+<span class="fc" id="L14">		this.idx = idx;</span>
+<span class="fc" id="L15">	}</span>
+	
+	public boolean isTargeted(int x, int y) {
+<span class="fc bfc" id="L18" title="All 4 branches covered.">		if ((x &gt;= (this.x-width) &amp;&amp; x &lt;= (this.x + width)) &amp;&amp; </span>
+<span class="pc bpc" id="L19" title="2 of 4 branches missed.">			(y &gt;= (this.y-width) &amp;&amp; y &lt;= (this.y + width))) {</span>
+<span class="fc" id="L20">			return true;</span>
+		}
+<span class="fc" id="L22">		return false;</span>
+	}
+	
+	public void toogleSelected() {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (true == this.isSelected) {</span>
+<span class="fc" id="L27">			this.isSelected = false;</span>
+<span class="fc" id="L28">			return;</span>
+		}
+<span class="fc" id="L30">		this.isSelected = true;</span>
+<span class="fc" id="L31">	}</span>
+	
+    public Object clone() {    
+<span class="fc" id="L34">        Object o = null;    </span>
+        try {    
+<span class="fc" id="L36">            o=(Node)super.clone();</span>
+<span class="pc" id="L37">        } catch(CloneNotSupportedException e) {    </span>
+<span class="nc" id="L38">             System.out.println(e.toString());    </span>
+        }    
+<span class="fc" id="L40">        return o;    </span>
+    }
+    
+    public int getX() {
+<span class="fc" id="L44">    	return this.x;</span>
+    }
+
+    public int getY() {
+<span class="fc" id="L48">    	return this.y;</span>
+    }
+    
+    public int getWidth() {
+<span class="fc" id="L52">    	return this.width;</span>
+    }
+    
+    public boolean isNodeSelected() {
+<span class="fc" id="L56">    	return isSelected;</span>
+    }
+    
+    public int compareTo(Node n) {
+<span class="fc" id="L60">    	return this.idx - n.idx;</span>
+    }
+    
+    public int getIdx() {
+<span class="fc" id="L64">    	return this.idx;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

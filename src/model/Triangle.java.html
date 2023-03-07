@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Triangle.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Triangle.java</span></div><h1>Triangle.java</h1><pre class="source lang-java linenums">package model;
+
+import java.awt.Color;
+
+public class Triangle {
+	Edge e1;
+	Edge e2;
+	Edge e3;
+	Color winColor;
+	
+<span class="fc" id="L11">	Triangle(Edge e1, Edge e2, Edge e3, Color c) {</span>
+<span class="fc" id="L12">		this.e1 = e1;</span>
+<span class="fc" id="L13">		this.e2 = e2;</span>
+<span class="fc" id="L14">		this.e3 = e3;</span>
+<span class="fc" id="L15">		this.winColor = c;</span>
+<span class="fc" id="L16">	}</span>
+	
+	public boolean isAllEdgesSameColor() {
+<span class="fc bfc" id="L19" title="All 2 branches covered.">		if (e1.color == e2.color &amp;&amp;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">			e1.color == e3.color) {</span>
+<span class="fc" id="L21">			return true;</span>
+		};
+<span class="fc" id="L23">		return false;</span>
+	}
+	
+	boolean hasEdge(Edge e) {
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		if (this.e1.idx == e.idx || </span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">			this.e2.idx == e.idx || </span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">			this.e3.idx == e.idx) {</span>
+<span class="fc" id="L30">			return true;</span>
+		}
+<span class="fc" id="L32">		return false;</span>
+	}
+	
+	boolean hasWinState() {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (false == isAllEdgesSameColor()) {</span>
+<span class="fc" id="L37">			return false;</span>
+		}
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">		if (this.winColor != this.e1.color) {</span>
+<span class="nc" id="L40">			return false;</span>
+		}
+<span class="fc" id="L42">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

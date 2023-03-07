@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Model.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Model.java</span></div><h1>Model.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.awt.Color;
+
+public class Model {
+	int score;
+	int numMove;
+	boolean hasWon;
+	Node[] nodes;						// 10 nodes
+	Map&lt;Node, Boolean&gt; selectedNodes;				
+<span class="fc" id="L16">	Map&lt;Integer, Edge&gt; nodesEdgeMap = new HashMap&lt;Integer, Edge&gt;();	// two nodes map one edge: n1-n2: e1; key: nodes index: node[0], node[1] -&gt; key: 0*10 + 1</span>
+	Triangle[] triangles;				// 6 triangles
+	Color[] triangleStatus;				// save color here only if one triangle has the same color; this list has the same index with triangles;
+	
+<span class="fc" id="L20">	public Model() {</span>
+<span class="fc" id="L21">		init();</span>
+<span class="fc" id="L22">	}</span>
+
+	public void reset() {
+<span class="fc" id="L25">		System.out.println(&quot;Reset...&quot;);</span>
+<span class="fc" id="L26">		init();</span>
+<span class="fc" id="L27">	}</span>
+
+	private void init()  {
+<span class="fc" id="L30">		score = 0;</span>
+<span class="fc" id="L31">		numMove = 0;</span>
+<span class="fc" id="L32">		hasWon = false;</span>
+<span class="fc" id="L33">		initNodes();</span>
+<span class="fc" id="L34">		initNodesEdgeMap();</span>
+<span class="fc" id="L35">		initTriangles();</span>
+<span class="fc" id="L36">		triangleStatus = new Color[] {null, null, null, null, null, null};</span>
+<span class="fc" id="L37">	}</span>
+	
+	void initNodes() {
+<span class="fc" id="L40">		int d = 50;</span>
+<span class="fc" id="L41">		int x1 = 165;</span>
+<span class="fc" id="L42">		int y1 = 13;</span>
+<span class="fc" id="L43">		nodes = new Node[] {</span>
+<span class="fc" id="L44">			new Node(x1, y1, 0),</span>
+<span class="fc" id="L45">			new Node(x1-d, y1+d*2, 1),</span>
+<span class="fc" id="L46">			new Node(x1+d, y1+d*2, 2),</span>
+			
+<span class="fc" id="L48">			new Node(x1-d*2, y1+d*4, 3),</span>
+<span class="fc" id="L49">			new Node(x1, y1+d*4, 4),</span>
+<span class="fc" id="L50">			new Node(x1+d*2, y1+d*4, 5),</span>
+			
+<span class="fc" id="L52">			new Node(x1-d*3, y1+d*6, 6),</span>
+<span class="fc" id="L53">			new Node(x1-d, y1+d*6, 7),</span>
+<span class="fc" id="L54">			new Node(x1+d, y1+d*6, 8),</span>
+<span class="fc" id="L55">			new Node(x1+d*3, y1+d*6, 9),</span>
+		};
+<span class="fc" id="L57">		selectedNodes = new HashMap&lt;Node, Boolean&gt;();</span>
+<span class="fc" id="L58">	}</span>
+	
+	void initNodesEdgeMap() {
+<span class="fc" id="L61">		nodesEdgeMap = new HashMap&lt;Integer, Edge&gt;();</span>
+<span class="fc" id="L62">		nodesEdgeMap.put(1, new Edge(nodes[0], nodes[1], Color.RED, 1)); // 0 * 10 + 1 </span>
+<span class="fc" id="L63">		nodesEdgeMap.put(10, nodesEdgeMap.get(1));</span>
+		
+<span class="fc" id="L65">		nodesEdgeMap.put(2, new Edge(nodes[0], nodes[2], Color.RED, 2));</span>
+<span class="fc" id="L66">		nodesEdgeMap.put(20, nodesEdgeMap.get(2));</span>
+		
+<span class="fc" id="L68">		nodesEdgeMap.put(12, new Edge(nodes[1], nodes[2], Color.GREEN, 12));</span>
+<span class="fc" id="L69">		nodesEdgeMap.put(21, nodesEdgeMap.get(12));</span>
+		
+<span class="fc" id="L71">		nodesEdgeMap.put(13, new Edge(nodes[1], nodes[3], Color.RED, 13));</span>
+<span class="fc" id="L72">		nodesEdgeMap.put(31, nodesEdgeMap.get(13));</span>
+		
+<span class="fc" id="L74">		nodesEdgeMap.put(14, new Edge(nodes[1], nodes[4], Color.BLUE, 14));</span>
+<span class="fc" id="L75">		nodesEdgeMap.put(41, nodesEdgeMap.get(14));</span>
+
+<span class="fc" id="L77">		nodesEdgeMap.put(34, new Edge(nodes[3], nodes[4], Color.GREEN, 34));</span>
+<span class="fc" id="L78">		nodesEdgeMap.put(43, nodesEdgeMap.get(34));</span>
+		
+<span class="fc" id="L80">		nodesEdgeMap.put(24, new Edge(nodes[2], nodes[4], Color.BLUE, 24));</span>
+<span class="fc" id="L81">		nodesEdgeMap.put(42, nodesEdgeMap.get(24));</span>
+
+<span class="fc" id="L83">		nodesEdgeMap.put(25, new Edge(nodes[2], nodes[5], Color.RED, 25));</span>
+<span class="fc" id="L84">		nodesEdgeMap.put(52, nodesEdgeMap.get(25));</span>
+		
+<span class="fc" id="L86">		nodesEdgeMap.put(45, new Edge(nodes[4], nodes[5], Color.GREEN, 45));</span>
+<span class="fc" id="L87">		nodesEdgeMap.put(54, nodesEdgeMap.get(45));</span>
+		
+<span class="fc" id="L89">		nodesEdgeMap.put(36, new Edge(nodes[3], nodes[6], Color.RED, 36));</span>
+<span class="fc" id="L90">		nodesEdgeMap.put(63, nodesEdgeMap.get(36));</span>
+
+<span class="fc" id="L92">		nodesEdgeMap.put(37, new Edge(nodes[3], nodes[7], Color.BLUE, 37));</span>
+<span class="fc" id="L93">		nodesEdgeMap.put(73, nodesEdgeMap.get(37));</span>
+	
+<span class="fc" id="L95">		nodesEdgeMap.put(67, new Edge(nodes[6], nodes[7], Color.GREEN, 67));</span>
+<span class="fc" id="L96">		nodesEdgeMap.put(76, nodesEdgeMap.get(67));</span>
+		
+<span class="fc" id="L98">		nodesEdgeMap.put(47, new Edge(nodes[4], nodes[7], Color.BLUE, 47));</span>
+<span class="fc" id="L99">		nodesEdgeMap.put(74, nodesEdgeMap.get(47));</span>
+
+<span class="fc" id="L101">		nodesEdgeMap.put(48, new Edge(nodes[4], nodes[8], Color.BLUE, 48));</span>
+<span class="fc" id="L102">		nodesEdgeMap.put(84, nodesEdgeMap.get(48));</span>
+		
+<span class="fc" id="L104">		nodesEdgeMap.put(78, new Edge(nodes[7], nodes[8], Color.GREEN, 78));</span>
+<span class="fc" id="L105">		nodesEdgeMap.put(87, nodesEdgeMap.get(78));</span>
+		
+<span class="fc" id="L107">		nodesEdgeMap.put(58, new Edge(nodes[5], nodes[8], Color.BLUE, 58));</span>
+<span class="fc" id="L108">		nodesEdgeMap.put(85, nodesEdgeMap.get(58));</span>
+		
+<span class="fc" id="L110">		nodesEdgeMap.put(59, new Edge(nodes[5], nodes[9], Color.RED, 59));</span>
+<span class="fc" id="L111">		nodesEdgeMap.put(95, nodesEdgeMap.get(59));</span>
+		
+<span class="fc" id="L113">		nodesEdgeMap.put(89, new Edge(nodes[8], nodes[9], Color.GREEN, 89));</span>
+<span class="fc" id="L114">		nodesEdgeMap.put(98, nodesEdgeMap.get(89));</span>
+<span class="fc" id="L115">	}</span>
+
+	void initTriangles() {
+<span class="fc" id="L118">		triangles = new Triangle[] {</span>
+<span class="fc" id="L119">			new Triangle(nodesEdgeMap.get(1), nodesEdgeMap.get(2), nodesEdgeMap.get(12), Color.RED), </span>
+<span class="fc" id="L120">			new Triangle(nodesEdgeMap.get(13), nodesEdgeMap.get(14), nodesEdgeMap.get(34), Color.BLUE), </span>
+<span class="fc" id="L121">			new Triangle(nodesEdgeMap.get(24), nodesEdgeMap.get(25), nodesEdgeMap.get(45), Color.GREEN), </span>
+<span class="fc" id="L122">			new Triangle(nodesEdgeMap.get(36), nodesEdgeMap.get(37), nodesEdgeMap.get(67), Color.GREEN), </span>
+<span class="fc" id="L123">			new Triangle(nodesEdgeMap.get(47), nodesEdgeMap.get(48), nodesEdgeMap.get(78), Color.RED), </span>
+<span class="fc" id="L124">			new Triangle(nodesEdgeMap.get(58), nodesEdgeMap.get(59), nodesEdgeMap.get(89), Color.BLUE), </span>
+		};
+<span class="fc" id="L126">	}</span>
+	
+	public Node[] getNodes() {
+<span class="fc" id="L129">		final Node[] ret = (Node[])this.nodes.clone();</span>
+<span class="fc" id="L130">		return ret;</span>
+	}
+	
+	public Edge[] getEdges() {
+<span class="fc" id="L134">		List&lt;Edge&gt; list = new ArrayList&lt;Edge&gt;();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (int i = 0; i &lt; this.triangles.length; i++) {</span>
+<span class="fc" id="L136">			list.add( (Edge)triangles[i].e1.clone() );</span>
+<span class="fc" id="L137">			list.add( (Edge)triangles[i].e2.clone() );</span>
+<span class="fc" id="L138">			list.add( (Edge)triangles[i].e3.clone() );</span>
+		}
+<span class="fc" id="L140">		return list.toArray(new Edge[list.size()]);</span>
+	}
+	
+	public List&lt;Edge&gt; isSelectedNodesAvailable() {
+		// Check if there are three nodes selected
+<span class="fc" id="L145">		List&lt;Edge&gt; ret = new ArrayList&lt;Edge&gt;();</span>
+<span class="fc" id="L146">		int count = 0;</span>
+<span class="fc" id="L147">		List&lt;Integer&gt; idxs = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">	    for (Node n : selectedNodes.keySet()) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">	    	if (true == n.isSelected) {</span>
+<span class="fc" id="L150">	    		idxs.add(n.idx);</span>
+<span class="fc" id="L151">	    		count++;</span>
+	    	}
+	    }
+<span class="fc bfc" id="L154" title="All 2 branches covered.">	    if (3 != count) {</span>
+<span class="fc" id="L155">	    	return ret;</span>
+	    }
+	    
+<span class="fc" id="L158">		Collections.sort(idxs);</span>
+		// Check if the three selected nodes form adjacent edges 
+<span class="fc" id="L160">    	int key1 = idxs.get(0) * 10 + idxs.get(1);</span>
+<span class="fc" id="L161">    	int key2 = idxs.get(1) * 10 + idxs.get(2);</span>
+<span class="fc" id="L162">    	int key3 = idxs.get(2) * 10 + idxs.get(0);</span>
+
+<span class="fc" id="L164">		boolean has1 = nodesEdgeMap.containsKey(key1);</span>
+<span class="fc" id="L165">		boolean has2 = nodesEdgeMap.containsKey(key2);</span>
+<span class="fc" id="L166">		boolean has3 = nodesEdgeMap.containsKey(key3);</span>
+		// Check if the three edges is in the same triangle and make sure the order of edges is clockwise.
+<span class="pc bpc" id="L168" title="2 of 6 branches missed.">		if (has1 &amp;&amp; has2 &amp;&amp; has3) {</span>
+<span class="fc" id="L169">			Edge e1 = nodesEdgeMap.get(key1);</span>
+<span class="fc" id="L170">			Edge e2 = nodesEdgeMap.get(key2);</span>
+<span class="fc" id="L171">			Edge e3 = nodesEdgeMap.get(key3);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (isEdgesInSameTriangle(e1, e2, e3)) {</span>
+<span class="fc" id="L173">				key1 = idxs.get(0) * 10 + idxs.get(1);</span>
+<span class="fc" id="L174">				key2 = idxs.get(0) * 10 + idxs.get(2);</span>
+<span class="fc" id="L175">				key3 = idxs.get(1) * 10 + idxs.get(2);</span>
+			}
+		}
+
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (has1) {</span>
+<span class="fc" id="L180">			ret.add(nodesEdgeMap.get(key1));</span>
+		}
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (has2) {</span>
+<span class="fc" id="L183">			ret.add(nodesEdgeMap.get(key2));</span>
+		}
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (has3) {</span>
+<span class="fc" id="L186">			ret.add(nodesEdgeMap.get(key3));</span>
+		}
+<span class="fc" id="L188">		return ret;</span>
+	}
+	
+	public void clearSelectedNodes() {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">	    for (Node n : selectedNodes.keySet()) {</span>
+<span class="fc" id="L193">	    	n.toogleSelected();</span>
+        }
+<span class="fc" id="L195">		selectedNodes = new HashMap&lt;Node, Boolean&gt;();</span>
+<span class="fc" id="L196">	}</span>
+	
+	public void updateMove() {
+<span class="fc" id="L199">		this.numMove += 1;</span>
+<span class="fc" id="L200">	}</span>
+
+	int numOfNewTrianglesOfSameColor() {
+<span class="nc" id="L203">		int ret = 0;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (int i = 0; i &lt; triangles.length; i++) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (triangles[i].isAllEdgesSameColor()) {</span>
+<span class="nc" id="L206">				ret++;</span>
+			}
+		}
+<span class="nc" id="L209">		return ret;</span>
+	}
+	
+	public int getNumberMove() {
+<span class="fc" id="L213">		return this.numMove;</span>
+	}
+	
+	public int getScore() {
+<span class="fc" id="L217">		return this.score;</span>
+	}
+	
+	public void selectMouseNode(int x, int y) {
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		for (int i = 0; i &lt; nodes.length; i++) {</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">			if(true == nodes[i].isTargeted(x, y)) {</span>
+<span class="fc" id="L223">				nodes[i].toogleSelected();</span>
+<span class="fc" id="L224">				System.out.printf(&quot;node[%d] isSelected: %b\n&quot;, nodes[i].idx, nodes[i].isSelected);</span>
+				
+<span class="fc bfc" id="L226" title="All 2 branches covered.">				if (true == nodes[i].isNodeSelected()) {</span>
+<span class="fc" id="L227">					selectedNodes.put(nodes[i], true);</span>
+<span class="fc" id="L228">				} else {</span>
+<span class="fc" id="L229">					selectedNodes.put(nodes[i], false);</span>
+				}
+<span class="fc" id="L231">				return;</span>
+			}
+		}
+<span class="nc" id="L234">	}</span>
+	
+	public void swapColor(Edge e1, Edge e2) {
+<span class="fc" id="L237">		Color tmp = e1.color;</span>
+<span class="fc" id="L238">		e1.color = e2.color;</span>
+<span class="fc" id="L239">		e2.color = tmp;</span>
+<span class="fc" id="L240">	}</span>
+
+	public void updateScore() {
+		//boolean newTriangleWithSameColor = false;
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		for (int i = 0; i &lt; triangles.length; i++) {</span>
+			// 1. triangle not with same color
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">			if (true != triangles[i].isAllEdgesSameColor()) {</span>
+				//if (triangleStatus.length &gt; i) {
+				//	triangleStatus[i] = null;
+				//}
+				// reduce score by 10, if the last status of triangle has the same color, but changed with different color
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">				if (null != triangleStatus[i]) {</span>
+<span class="nc" id="L252">					this.score -= 10;</span>
+<span class="nc" id="L253">					triangleStatus[i] = null;</span>
+				}
+<span class="nc" id="L255">				continue;</span>
+			}
+			
+			// 2. add bonus if new triangle with same color
+<span class="nc bnc" id="L259" title="All 2 branches missed.">			if(null == triangleStatus[i])  {</span>
+				//newTriangleWithSameColor = true;
+<span class="nc" id="L261">				this.score += 10;</span>
+<span class="nc" id="L262">				triangleStatus[i] = triangles[i].e1.color;</span>
+<span class="nc" id="L263">				continue;</span>
+			}
+			
+			// 3. not bonus if swap edges of the same triangle with same old color
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (triangleStatus[i] == triangles[i].e1.color)  {</span>
+				continue;
+			}
+		}
+		//if (false == newTriangleWithSameColor) {
+<span class="fc" id="L272">			this.score -= 1;</span>
+		//}
+<span class="fc" id="L274">		return;</span>
+	}
+	
+	public boolean hasWon() {
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		for (int i = 0; i &lt; triangles.length; i++) {</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">			if (false == triangles[i].hasWinState()) {</span>
+<span class="fc" id="L280">				hasWon = false;</span>
+<span class="fc" id="L281">				return false;</span>
+			}
+		}
+<span class="nc" id="L284">		hasWon = true;</span>
+<span class="nc" id="L285">		return true;</span>
+	}
+	
+	/*List&lt;Edge&gt; getSelectedEdges() {
+		List&lt;Edge&gt; ret = new ArrayList&lt;Edge&gt;();
+		
+		return ret;
+	}*/
+	
+	public void unselectAllNodes() {
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		for (int i = 0; i &lt; nodes.length; i++) {</span>
+<span class="fc" id="L296">			nodes[i].isSelected = false;</span>
+		}
+<span class="fc" id="L298">	}</span>
+	
+	public boolean getHasWon() {
+<span class="fc" id="L301">		return hasWon;</span>
+	}
+	
+	public boolean isEdgesInSameTriangle(Edge e1, Edge e2, Edge e3) {
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		for (int i = 0; i &lt; triangles.length; i++) {</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">			if (triangles[i].hasEdge(e1) &amp;&amp;</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">				triangles[i].hasEdge(e2) &amp;&amp; </span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">				triangles[i].hasEdge(e3)) {</span>
+<span class="fc" id="L309">				return true;</span>
+			}
+		}
+<span class="fc" id="L312">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TrianglePuzzleAppTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">TrianglePuzzleAppTest.java</span></div><h1>TrianglePuzzleAppTest.java</h1><pre class="source lang-java linenums">package view;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+<span class="fc" id="L6">public class TrianglePuzzleAppTest {</span>
+    @Test
+    void testGetSwapBtn() {
+<span class="fc" id="L9">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L10">       assertNotNull(app.getSwapBtn());</span>
+<span class="fc" id="L11">    }</span>
+
+    @Test 
+    void testGetUnselectAllBtn() {
+<span class="fc" id="L15">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L16">    	assertNotNull(app.getUnselectAllBtn());</span>
+<span class="fc" id="L17">    }</span>
+    
+    @Test 
+    void testGetPanel() {
+<span class="fc" id="L21">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L22">    	assertNotNull(app.getPanel());</span>
+<span class="fc" id="L23">    }</span>
+    
+    @Test 
+    void testGetCongratsLabel() {
+<span class="fc" id="L27">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L28">    	assertNotNull(app.getCongratsLabel());</span>
+<span class="fc" id="L29">    }</span>
+
+    @Test 
+    void testGetMoveField() {
+<span class="fc" id="L33">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L34">    	assertNotNull(app.getMoveField());</span>
+<span class="fc" id="L35">    }</span>
+
+    @Test 
+    void testGetScoreField() {
+<span class="fc" id="L39">    	TrianglePuzzleApp app = new TrianglePuzzleApp();</span>
+<span class="fc" id="L40">    	assertNotNull(app.getScoreField());</span>
+<span class="fc" id="L41">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

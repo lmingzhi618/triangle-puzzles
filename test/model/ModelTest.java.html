@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ModelTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">ModelTest.java</span></div><h1>ModelTest.java</h1><pre class="source lang-java linenums">package model;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.Color;
+
+import org.junit.jupiter.api.Test;
+
+<span class="fc" id="L9">public class ModelTest {</span>
+<span class="fc" id="L10">	private int d = 50;</span>
+<span class="fc" id="L11">	private int x = 165;</span>
+<span class="fc" id="L12">	private int y = 13;</span>
+    
+    @Test
+    void testReset() {
+<span class="fc" id="L16">        Model m = new Model();</span>
+<span class="fc" id="L17">        m.updateMove();</span>
+<span class="fc" id="L18">        m.updateScore();</span>
+<span class="fc" id="L19">        m.reset();</span>
+<span class="fc" id="L20">        assertEquals(0, m.getScore());</span>
+<span class="fc" id="L21">        assertEquals(0, m.getNumberMove());</span>
+<span class="fc" id="L22">    }</span>
+
+    @Test
+    void testGetNodes() {
+<span class="fc" id="L26">        Model m = new Model();</span>
+<span class="fc" id="L27">        assertEquals(10, m.getNodes().length);</span>
+<span class="fc" id="L28">    }</span>
+    
+    @Test
+    void testGetEdges() {
+<span class="fc" id="L32">        Model m = new Model();</span>
+<span class="fc" id="L33">        assertEquals(18, m.getEdges().length);</span>
+<span class="fc" id="L34">    }</span>
+    
+    @Test
+    void testIsSelectedNodesAvailable() {
+<span class="fc" id="L38">        Model m = new Model();</span>
+<span class="fc" id="L39">        assertEquals(0, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L40">        m.selectMouseNode(x, y);</span>
+<span class="fc" id="L41">        m.selectMouseNode(x-d, y+d*2);</span>
+<span class="fc" id="L42">        m.selectMouseNode(x+d, y+d*2);</span>
+<span class="fc" id="L43">        assertEquals(3, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L44">    }</span>
+    
+    @Test
+    void testClearSelectedNodes() {
+<span class="fc" id="L48">        Model m = new Model();</span>
+<span class="fc" id="L49">        m.selectMouseNode(x, y);</span>
+<span class="fc" id="L50">        m.selectMouseNode(x-d, y+d*2);</span>
+<span class="fc" id="L51">        m.selectMouseNode(x+d, y+d*2);</span>
+<span class="fc" id="L52">        assertEquals(3, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L53">        m.clearSelectedNodes();</span>
+<span class="fc" id="L54">        assertEquals(0, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L55">    }</span>
+
+    @Test
+    void testUpdateMove() {
+<span class="fc" id="L59">        Model m = new Model();</span>
+<span class="fc" id="L60">        assertEquals(0, m.getNumberMove());</span>
+<span class="fc" id="L61">        m.updateMove();</span>
+<span class="fc" id="L62">        assertEquals(1, m.getNumberMove());</span>
+<span class="fc" id="L63">    }</span>
+    
+    @Test
+    void testGetNumberMove() {
+<span class="fc" id="L67">        Model m = new Model();</span>
+<span class="fc" id="L68">        assertEquals(0, m.getNumberMove());</span>
+<span class="fc" id="L69">        m.updateMove();</span>
+<span class="fc" id="L70">        assertEquals(1, m.getNumberMove());</span>
+<span class="fc" id="L71">    }</span>
+    
+    @Test
+    void testGetScore() {
+<span class="fc" id="L75">        Model m = new Model();</span>
+<span class="fc" id="L76">        assertEquals(0, m.getScore());</span>
+<span class="fc" id="L77">        m.updateScore();</span>
+<span class="fc" id="L78">        assertEquals(-1, m.getScore());</span>
+<span class="fc" id="L79">    }</span>
+
+    @Test 
+    void testSelectMouseNode() {
+<span class="fc" id="L83">        Model m = new Model();</span>
+<span class="fc" id="L84">        m.selectMouseNode(x, y);</span>
+<span class="fc" id="L85">        m.selectMouseNode(x-d, y+d*2);</span>
+<span class="fc" id="L86">        m.selectMouseNode(x+d, y+d*2);</span>
+<span class="fc" id="L87">        assertEquals(3, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L88">        m.clearSelectedNodes();</span>
+<span class="fc" id="L89">        assertEquals(0, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L90">    }</span>
+
+    @Test 
+    void testSwapColor() {
+<span class="fc" id="L94">		Node n0 = new Node(x, y, 0);</span>
+<span class="fc" id="L95">		Node n1 = new Node(x-d, y+d*2, 1);</span>
+<span class="fc" id="L96">		Node n2 = new Node(x+d, y+d*2, 2);</span>
+<span class="fc" id="L97">        Edge e1 = new Edge(n0, n1, Color.RED, 1);</span>
+<span class="fc" id="L98">        Edge e2 = new Edge(n0, n2, Color.RED, 2);</span>
+<span class="fc" id="L99">        Edge e3 = new Edge(n1, n2, Color.GREEN, 12);</span>
+
+<span class="fc" id="L101">        Model m = new Model();</span>
+<span class="fc" id="L102">        m.swapColor(e1, e2);</span>
+<span class="fc" id="L103">        assertEquals(Color.RED, e1.getColor());</span>
+<span class="fc" id="L104">        m.swapColor(e1, e3);</span>
+<span class="fc" id="L105">        assertEquals(Color.RED, e3.getColor());</span>
+<span class="fc" id="L106">    }</span>
+
+    @Test
+    void testUpdateScore() {
+<span class="fc" id="L110">        Model m = new Model();</span>
+<span class="fc" id="L111">        assertEquals(0, m.getScore());</span>
+<span class="fc" id="L112">        m.updateScore();</span>
+<span class="fc" id="L113">        assertEquals(-1, m.getScore());</span>
+<span class="fc" id="L114">    }</span>
+
+    @Test
+    void testHasWon() {
+<span class="fc" id="L118">        Model m = new Model();</span>
+<span class="fc" id="L119">        assertFalse(m.hasWon());</span>
+<span class="fc" id="L120">    }</span>
+
+    /*
+    @Test 
+    void testGetSelectedEdges() {
+        Model m = new Model();
+        assertEquals(0, m.getSelectedEdges().size());
+        m.selectMouseNode(x, y);
+        m.selectMouseNode(x-d, y+d*2);
+        m.selectMouseNode(x+d, y+d*2);
+        assertEquals(3, m.getSelectedEdges().size());
+    }*/
+
+    @Test 
+    void testUnselectAllNodes() {
+<span class="fc" id="L135">        Model m = new Model();</span>
+<span class="fc" id="L136">        m.selectMouseNode(x, y);</span>
+<span class="fc" id="L137">        m.selectMouseNode(x-d, y+d*2);</span>
+<span class="fc" id="L138">        m.selectMouseNode(x+d, y+d*2);</span>
+<span class="fc" id="L139">        assertEquals(3, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L140">        m.selectMouseNode(x, y);</span>
+<span class="fc" id="L141">        m.selectMouseNode(x-d, y+d*2);</span>
+<span class="fc" id="L142">        m.selectMouseNode(x+d, y+d*2);</span>
+<span class="fc" id="L143">        assertEquals(0, m.isSelectedNodesAvailable().size());</span>
+<span class="fc" id="L144">    }</span>
+
+    @Test 
+    void testGetHasWon() {
+<span class="fc" id="L148">        Model m = new Model();</span>
+<span class="fc" id="L149">        assertFalse(m.getHasWon());</span>
+<span class="fc" id="L150">    }</span>
+
+    @Test 
+    void testIsEdgesInSameTriangle() {
+<span class="fc" id="L154">		Node n0 = new Node(x, y, 0);</span>
+<span class="fc" id="L155">		Node n1 = new Node(x-d, y+d*2, 1);</span>
+<span class="fc" id="L156">		Node n2 = new Node(x+d, y+d*2, 2);</span>
+<span class="fc" id="L157">		Node n3 = new Node(x-d*2, y+d*4, 3);</span>
+<span class="fc" id="L158">        Edge e1 = new Edge(n0, n1, Color.RED, 1);</span>
+<span class="fc" id="L159">        Edge e2 = new Edge(n0, n2, Color.RED, 2);</span>
+<span class="fc" id="L160">        Edge e12 = new Edge(n1, n2, Color.GREEN, 12);</span>
+<span class="fc" id="L161">        Edge e13 = new Edge(n1, n3, Color.RED, 13);</span>
+    
+<span class="fc" id="L163">        Model m = new Model();</span>
+<span class="fc" id="L164">        assertTrue(m.isEdgesInSameTriangle(e1, e2, e12));</span>
+<span class="fc" id="L165">        assertFalse(m.isEdgesInSameTriangle(e1, e2, e13));</span>
+<span class="fc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>

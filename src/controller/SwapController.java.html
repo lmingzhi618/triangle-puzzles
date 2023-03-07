@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SwapController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</a> &gt; <a href="../../index.html" class="el_group">TrianglePuzzle</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">SwapController.java</span></div><h1>SwapController.java</h1><pre class="source lang-java linenums">package controller;
+
+import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
+
+import model.Edge;
+import model.Model;
+import view.TrianglePuzzleApp;
+
+public class SwapController {
+	Model model;
+	TrianglePuzzleApp app;
+	
+<span class="fc" id="L15">	public SwapController(TrianglePuzzleApp app, Model m) {</span>
+<span class="fc" id="L16">		this.model = m;</span>
+<span class="fc" id="L17">		this.app = app;</span>
+<span class="fc" id="L18">	}</span>
+	
+	public void process() {
+<span class="fc" id="L21">		List&lt;Edge&gt; edges = model.isSelectedNodesAvailable();</span>
+		
+<span class="fc" id="L23">		System.out.printf(&quot;size of selected nodes: %d\n&quot;, edges.size());</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		if (edges.size() &lt; 2) {</span>
+<span class="fc" id="L25">			return;</span>
+		}
+<span class="fc" id="L27">		Edge e0 = edges.get(0);</span>
+<span class="fc" id="L28">		Edge e1 = edges.get(1);</span>
+		
+		
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if (2 == edges.size()) {</span>
+<span class="fc" id="L32">			model.swapColor(edges.get(0), edges.get(1));</span>
+<span class="fc" id="L33">			System.out.println(&quot;select edges: &quot; + e0.getIdx() + &quot;, &quot; + e1.getIdx());</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		} else if (3 == edges.size()) {</span>
+<span class="fc" id="L35">			Edge e2 = edges.get(2);</span>
+			//if (model.isEdgesInSameTriangle(e0, e1, e2)) {
+<span class="fc" id="L37">				Collections.sort(edges);</span>
+<span class="fc" id="L38">				Color c0 = e0.getColor();</span>
+<span class="fc" id="L39">				Color c1 = e1.getColor();</span>
+<span class="fc" id="L40">				e0.setColor(e2.getColor());</span>
+<span class="fc" id="L41">				e1.setColor(c0);</span>
+<span class="fc" id="L42">				e2.setColor(c1);</span>
+<span class="fc" id="L43">				System.out.printf(&quot;e2: %d&quot;, e2.getIdx());</span>
+<span class="fc" id="L44">				System.out.println(&quot;select edges: &quot; + e0.getIdx() + &quot;, &quot; + e1.getIdx() + &quot;, &quot; + e2.getIdx());</span>
+			//} else {
+			//	model.swapColor(edges.get(0), edges.get(1));
+			//	System.out.println(&quot;select edges: &quot; + e0.getIdx() + &quot;, &quot; + e1.getIdx());
+			//}
+		}
+		
+<span class="fc" id="L51">		model.clearSelectedNodes();</span>
+<span class="fc" id="L52">		model.unselectAllNodes();</span>
+<span class="fc" id="L53">		model.updateMove();</span>
+<span class="fc" id="L54">		model.updateScore();</span>
+
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (model.hasWon()) {</span>
+<span class="nc" id="L57">			app.getCongratsLabel().setText(&quot;Congratuations!&quot;);</span>
+<span class="nc" id="L58">			app.getSwapBtn().setEnabled(false);</span>
+<span class="nc" id="L59">			app.getUnselectAllBtn().setEnabled(false);</span>
+		}
+<span class="fc" id="L61">		int nMove = model.getNumberMove();</span>
+<span class="fc" id="L62">		int nScore = model.getScore();</span>
+<span class="fc" id="L63">		app.getMoveField().setText(String.valueOf(nMove));;</span>
+<span class="fc" id="L64">		app.getScoreField().setText(String.valueOf(nScore));;</span>
+<span class="fc" id="L65">		app.getPanel().repaint();</span>
+<span class="fc" id="L66">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TrianglePuzzle (1) (Oct 4, 2021 12:58:55 AM)</div></body></html>
